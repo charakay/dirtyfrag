@@ -5,7 +5,6 @@ RUN apt-get update && apt-get install -y \
     make \
     libcap-dev \
     iproute2 \
-    iputils-ping \
     kmod \
     && rm -rf /var/lib/apt/lists/*
 
@@ -16,5 +15,9 @@ COPY entrypoint.sh .
 RUN gcc -O2 -o dirtyfrag dirtyfrag.c -lpthread
 
 RUN chmod +x entrypoint.sh
+
+RUN useradd -ms /bin/bash -u 10001 choreouser
+
+USER 10001
 
 CMD ["./entrypoint.sh"]
